@@ -1,4 +1,4 @@
-# redmics - redmine icalendar export plugin
+# redmics - redmine ics export plugin
 # Copyright (c) 2010  Frank Schwarz, frank.schwarz@buschmais.com
 #
 # This program is free software; you can redistribute it and/or
@@ -42,4 +42,3 @@ class SidebarHooks < Redmine::Hook::ViewListener
   end
 
 end
-

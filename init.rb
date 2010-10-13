@@ -1,4 +1,4 @@
-# redmics - redmine icalendar export plugin
+# redmics - redmine ics export plugin
 # Copyright (c) 2010  Frank Schwarz, frank.schwarz@buschmais.com
 #
 # This program is free software; you can redistribute it and/or
@@ -19,12 +19,11 @@ require 'redmine'
 
 require 'sidebar_hooks'
 
-Redmine::Plugin.register :redmine_icalendar_export do
-  name 'redmine icalendar export plugin (aka redmics)'
+Redmine::Plugin.register :redmine_ics_export do
+  name 'redmine ics export plugin (aka redmics)'
   author 'Frank Schwarz'
   description 'ICalendar view of issue- and version-deadlines'
   version '1.0'
   url 'http://code.google.com/p/redmics/'
-  author_url 'http://www.buschmais.de/'
+  author_url 'http://www.buschmais.de/author/frank/'
 end
-
