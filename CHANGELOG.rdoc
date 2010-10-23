@@ -1,0 +1,7 @@
+= redmine_ics_export (redmics) change-log
+
+== 1.0.2
+
+* renaming to redmine_ics_export, please take care when updating
+* standard locales defaulting to english
+* french locale
