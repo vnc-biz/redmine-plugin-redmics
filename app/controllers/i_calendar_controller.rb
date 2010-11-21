@@ -79,35 +79,33 @@ private
   
   def create_calendar(events)
     cal = Icalendar::Calendar.new
-    events.each { |i| 
-      if (i.due_date == nil) && (i.is_a? Issue) && (i.fixed_version != nil)
-        i.due_date = i.fixed_version.due_date
-      end
-      if i.due_date == nil
-        next
-      end
+    events.each { |i|
+      # issue due date or associated version due date, skip if neither date is present
+      due_date = i.due_date
+      due_date ||= i.fixed_version.due_date if (i.is_a? Issue) && (i.fixed_version != nil)
+      next if due_date.nil?
+      
       event = Icalendar::Event.new
-      event.dtstart        i.due_date, {'VALUE' => 'DATE'}
-      event.dtend          i.due_date + 1, {'VALUE' => 'DATE'}
+      
+      event.dtstart        due_date, {'VALUE' => 'DATE'}
+      event.dtend          due_date + 1, {'VALUE' => 'DATE'}
+      event.created        i.created_on.to_date, {'VALUE' => 'DATE'}
+      event.last_modified  i.updated_on.to_datetime unless i.updated_on.nil?
+      event.description    i.description unless i.description.nil?
+      
       if i.is_a? Issue
         event.summary      "#{i.subject} (#{i.status.name})"
-        event.url          url_for(:controller => 'issues', :action => 'show', :id => i.id, :project_id => i.project_id)
-        unless i.fixed_version.nil?
-          event.categories   [i.fixed_version.name]
-        end
-        unless i.assigned_to.nil?
-          event.add_contact  i.assigned_to.name, {"ALTREP" => i.assigned_to.mail}
-        end
+        event.categories   [i.fixed_version.name] unless i.fixed_version.nil?
+        event.add_contact  i.assigned_to.name, {"ALTREP" => i.assigned_to.mail} unless i.assigned_to.nil?
         event.organizer    "mailto:#{i.author.mail}", {"CN" => i.author.name}
         event.status       i.assigned_to == nil ? "TENTATIVE" : "CONFIRMED"
-        event.created      i.created_on.to_date, {'VALUE' => 'DATE'}
+        event.url          url_for(:controller => 'issues', :action => 'show', :id => i.id, :project_id => i.project_id)
+        event.uid          "id:redmics:project:#{i.project_id}:issue:#{i.id}@#{Setting.host_name}"
       elsif i.is_a? Version
         event.summary      "%s '#{i.name}'" % l(:label_calendar_deadline)
         event.url          url_for(:controller => 'versions', :action => 'show', :id => i.id)
+        event.uid          "id:redmics:project:#{i.project_id}:version:#{i.id}@#{Setting.host_name}"
       else
-      end
-      unless i.description.nil?
-        event.description = i.description
       end
       cal.add_event(event)
     }
