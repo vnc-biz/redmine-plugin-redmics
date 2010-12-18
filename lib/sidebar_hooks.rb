@@ -19,8 +19,9 @@ class SidebarHooks < Redmine::Hook::ViewListener
   
   def view_issues_sidebar_planning_bottom(context = { })
     project = context[:project]
+    user = User.current
     
-    unless User.current.allowed_to?(:view_calendar, project, :global => true)
+    unless user.allowed_to?(:view_calendar, project, :global => true)
       return ""
     end
     
@@ -31,6 +32,8 @@ class SidebarHooks < Redmine::Hook::ViewListener
       '+' =>  l(:label_issues_assigned),
       '*' =>  l(:label_issues_all)
     }
+    label.delete('me') if user.anonymous?
+    
     label_open = l(:label_issues_open_only)
     label.keys.sort.each {|type|
       link_all  = link_to(label[type], :status => 'all',  :assigned_to => type, :controller => 'i_calendar', :action => 'index', :project_id => project, :key => User.current.rss_key, :format => 'atom')
