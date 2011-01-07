@@ -1,8 +1,9 @@
-# Italian strings go here
+# Italian strings go here, contribution of iacopo.spalletti
 it:
   label_icalendar_header: ICalendar
-  label_issues_mine: My issues
-  label_issues_assigned: Assigned issues
-  label_issues_all: All issues
-  label_issues_open_only: open only
-  label_calendar_deadline: deadline
+  label_issues_mine: Le mie segnalazioni
+  label_issues_assigned: Segnalazioni assegnate
+  label_issues_all: Tutte le segnalazioni
+  label_issues_open_only: solo aperte
+  label_calendar_deadline: scadenza
+  
