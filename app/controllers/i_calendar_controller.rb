@@ -141,6 +141,7 @@ private
       end
       cal.add_event(event)
     }
+    cal.publish
     return cal
   end
 
