@@ -31,7 +31,7 @@ class ICalendarController < ApplicationController
       # project
       if user.anonymous?
         if project && user.allowed_to?(:view_calendar, project)
-          # the project and its public descendents
+          # the project and its public descendants
           ids = [project.id] + project.descendants.find_all { |p|  p.is_public? && p.active? }.collect(&:id)
           project_condition = ["#{Project.table_name}.id IN (?)", ids]
         elsif project.nil? && user.allowed_to?(:view_calendar, nil, :global => true)
@@ -40,7 +40,7 @@ class ICalendarController < ApplicationController
         end
       elsif user.active?
         if project && user.allowed_to?(:view_calendar, project)
-          # the project and its public descendents or where the user is member of
+          # the project and its public descendants or where the user is member of
           userproject_ids = user.memberships.collect(&:project_id).uniq
           ids = [project.id] + project.descendants.find_all { |p|  
             p.active? && (p.is_public? || userproject_ids.include?(p.id))
@@ -79,7 +79,7 @@ class ICalendarController < ApplicationController
       end
 
       events = []
-      # queriy: issues
+      # query: issues
       c = ARCondition.new()
       c << project_condition
       c << issue_status_condition   unless issue_status_condition.empty?
@@ -89,7 +89,7 @@ class ICalendarController < ApplicationController
         :include => [:tracker, :assigned_to, :priority, :project, :status, :fixed_version, :author], 
         :conditions => c.conditions
       )
-      # queriy: versions
+      # query: versions
       c = ARCondition.new()
       c << project_condition
       c << version_status_condition unless version_status_condition.empty?
