@@ -3,6 +3,7 @@ es:
   label_icalendar_header: ICalendar
   label_issues_mine: Mis peticiones
   label_issues_assigned: Peticiones asignadas
-  label_issues_all: Todas peticiones
+  label_issues_all: Todas las peticiones
   label_issues_open_only: sólo abiertas
   label_calendar_deadline: fin
+  toolip_icalendar_link: Copiar este enlace para usarlo en cualquier aplicación cliente que admita el formato ical

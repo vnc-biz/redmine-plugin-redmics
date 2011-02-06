@@ -33,14 +33,32 @@ class SidebarHooks < Redmine::Hook::ViewListener
       '*' =>  l(:label_issues_all)
     }
     label.delete('me') if user.anonymous?
-    
     label_open = l(:label_issues_open_only)
     label.keys.sort.each {|type|
-      link_all  = link_to(label[type], :status => 'all',  :assigned_to => type, :controller => 'i_calendar', :action => 'index', :project_id => project, :key => User.current.rss_key, :format => 'atom')
-      link_open = link_to(label_open,  :status => 'open', :assigned_to => type, :controller => 'i_calendar', :action => 'index', :project_id => project, :key => User.current.rss_key, :format => 'atom')
+      link_all  = link_to(label[type], 
+        {
+          :status => 'all',  
+          :assigned_to => type, 
+          :controller => 'i_calendar', 
+          :action => 'index', 
+          :project_id => project, 
+          :key => User.current.rss_key, 
+          :format => 'atom'
+        }, 
+        :title => l(:toolip_icalendar_link))
+      link_open = link_to(label_open,
+        {
+          :status => 'open', 
+          :assigned_to => type, 
+          :controller => 'i_calendar', 
+          :action => 'index', 
+          :project_id => project, 
+          :key => User.current.rss_key, 
+          :format => 'atom'
+        }, 
+        :title => l(:toolip_icalendar_link))
       result += "#{link_all} (#{link_open})<br/>\n";
     }
-    
     return result
   end
 

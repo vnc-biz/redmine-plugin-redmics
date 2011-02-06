@@ -6,3 +6,4 @@ fr:
   label_issues_all: Toutes les demandes
   label_issues_open_only: Ouvert
   label_calendar_deadline: Jalon
+  toolip_icalendar_link: Copy the link location for use in your favorite ical-application.

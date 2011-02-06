@@ -6,3 +6,4 @@ th:
   label_issues_all: All issues
   label_issues_open_only: open only
   label_calendar_deadline: deadline
+  toolip_icalendar_link: Copy the link location for use in your favorite ical-application.

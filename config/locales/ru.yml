@@ -6,3 +6,4 @@ ru:
   label_issues_all: Все задачи
   label_issues_open_only: только открытые
   label_calendar_deadline: крайний срок
+  toolip_icalendar_link: Copy the link location for use in your favorite ical-application.
