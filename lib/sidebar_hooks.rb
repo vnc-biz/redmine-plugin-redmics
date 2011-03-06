@@ -21,20 +21,18 @@ class SidebarHooks < Redmine::Hook::ViewListener
     project = context[:project]
     user = User.current
     
-    unless user.allowed_to?(:view_calendar, project, :global => true)
-      return ""
-    end
+    return '' unless user.allowed_to?(:view_calendar, project, :global => true)
     
     result = "<h3>%s</h3>\n" % l(:label_icalendar_header)
     
     label = {
-      'me' => l(:label_issues_mine),
-      '+' =>  l(:label_issues_assigned),
-      '*' =>  l(:label_issues_all)
+      :me  => l(:label_issues_mine),
+      :'+' => l(:label_issues_assigned),
+      :'*' => l(:label_issues_all)
     }
-    label.delete('me') if user.anonymous?
+    label.delete(:me) if user.anonymous?
     label_open = l(:label_issues_open_only)
-    label.keys.sort.each {|type|
+    label.keys.sort_by {|sym| sym.to_s}.each {|type|
       link_all  = link_to(label[type], 
         {
           :status => 'all',  

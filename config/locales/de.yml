@@ -5,5 +5,13 @@ de:
   label_issues_assigned: Zugewiesene Tickets
   label_issues_all: Alle Tickets
   label_issues_open_only: nur offene
-  label_calendar_deadline: Ende
   toolip_icalendar_link: Kopieren Sie die Link-Adresse und nutzen Sie sie in Ihrer bevorzugten ICal-Anwendung.
+  label_settings_rendering_header: Art der Ausgabe
+  label_settings_rendering_issues: Ticket-Darstellung als
+  label_settings_rendering_versions: Version-Darstellung als
+  option_settings_rendering_none: keine Darstellung
+  option_settings_rendering_vevent_full_span: durchgängiges Ereignis
+  option_settings_rendering_vevent_end_date: ganztägiges Ereignis zum Ende-Datum
+  option_settings_rendering_vevent_start_and_end_date: ganztägige Ereignisse zum Start- und Ende-Datum
+  option_settings_rendering_vtodo: Aufgabe
+  text_settings_rendering_more_information: Weitere Informationen unter

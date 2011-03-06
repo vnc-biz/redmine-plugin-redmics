@@ -5,5 +5,13 @@ es:
   label_issues_assigned: Peticiones asignadas
   label_issues_all: Todas las peticiones
   label_issues_open_only: sólo abiertas
-  label_calendar_deadline: fin
   toolip_icalendar_link: Copiar este enlace para usarlo en cualquier aplicación cliente que admita el formato ical
+  label_settings_rendering_header: Modo de presentación
+  label_settings_rendering_issues: Presenta peticiones como
+  label_settings_rendering_versions: Presenta versiones como
+  option_settings_rendering_none: no representación
+  option_settings_rendering_vevent_full_span: evento extendido
+  option_settings_rendering_vevent_end_date: evento de día completo para la fecha fin
+  option_settings_rendering_vevent_start_and_end_date: evento de día completo para la fecha de inicio y fin
+  option_settings_rendering_vtodo: tarea
+  text_settings_rendering_more_information: Véase también

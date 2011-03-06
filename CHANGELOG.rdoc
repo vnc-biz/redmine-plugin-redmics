@@ -1,5 +1,8 @@
 = redmine_ics_export (redmics) change-log
 
+== 1.2.0
+ * more redering options (issue 3, issue 5 and issue 9)
+
 == 1.1.0
 
 * enforcement of Redmine permissions in both anonymous and authenticated contexts (issue #6)

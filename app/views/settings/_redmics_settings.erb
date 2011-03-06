@@ -1,0 +1,22 @@
+<%# redmics - redmine ics export plugin, Copyright (c) 2010-2011 Frank Schwarz, frank.schwarz@buschmais.com %>
+<%
+options = ActiveSupport::OrderedHash.new
+options[l(:option_settings_rendering_none)] = :none
+options[l(:option_settings_rendering_vevent_full_span)] = :vevent_full_span
+options[l(:option_settings_rendering_vevent_end_date)] = :vevent_end_date
+options[l(:option_settings_rendering_vevent_start_and_end_date)] = :vevent_start_and_end_date
+options[l(:option_settings_rendering_vtodo)] = :vtodo
+%>
+<%= l(:label_settings_rendering_header) %>
+<p>
+  <%= content_tag :label, l(:label_settings_rendering_issues) + ':' %>
+  <%= select_tag 'settings[redmics_icsrender_issues]', options_for_select(options, @settings['redmics_icsrender_issues'].to_sym) %>
+</p>
+<p>
+  <%= content_tag :label, l(:label_settings_rendering_versions) + ':' %>
+  <%= select_tag 'settings[redmics_icsrender_versions]', options_for_select(options, @settings['redmics_icsrender_versions'].to_sym) %><br>
+</p>
+<p>
+  <%= content_tag :span, l(:text_settings_rendering_more_information) + ':' %>
+  <%= content_tag :a, 'http://code.google.com/p/redmics/wiki/Settings', :href => 'http://code.google.com/p/redmics/wiki/Settings' %> 
+</p>

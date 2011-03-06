@@ -5,5 +5,13 @@ ru:
   label_issues_assigned: Назначенные задачи
   label_issues_all: Все задачи
   label_issues_open_only: только открытые
-  label_calendar_deadline: крайний срок
   toolip_icalendar_link: Copy the link location for use in your favorite ical-application.
+  label_settings_rendering_header: Render options
+  label_settings_rendering_issues: Issue rendering as
+  label_settings_rendering_versions: Version rendering as
+  option_settings_rendering_none: skip rendering
+  option_settings_rendering_vevent_full_span: full time event
+  option_settings_rendering_vevent_end_date: all-day event for just the end date
+  option_settings_rendering_vevent_start_and_end_date: all-day event for start and end date
+  option_settings_rendering_vtodo: todo item
+  text_settings_rendering_more_information: For more information see
