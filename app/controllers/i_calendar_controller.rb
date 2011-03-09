@@ -275,8 +275,8 @@ private
   end
   
   def apply_issue_event_properties(issue, result)
-    result.each { |todo|  
-      todo.status         issue.assigned_to == nil ? "NEEDS-ACTION" : "ACCEPTED" unless issue.closed?
+    result.each { |event|  
+      event.status        issue.assigned_to ? "CONFIRMED" : "TENTATIVE" unless issue.closed?
     }
   end
   
@@ -372,8 +372,8 @@ private
   end
 
   def apply_version_event_properties(version, result)
-    result.each { |todo|  
-      todo.status         "ACCEPTED" unless version.closed?
+    result.each { |event|  
+      event.status        "CONFIRMED" unless version.closed?
     }
   end
   
@@ -442,7 +442,7 @@ private
   end
   
   def check_params
-    # wa answer with 'not found' if parameters seem to be bogus
+    # we answer with 'not found' if parameters seem to be bogus
     render_404 unless params[:status]
     render_404 unless params[:assigned_to]
     render_404 if params[:status].length > 10
