@@ -114,8 +114,8 @@ class ICalendarController < ApplicationController
     cal = Icalendar::Calendar.new
     events.each { |event| cal.add_event(event)}
     cal.publish
-    @cal_string = with_bug_correction(cal.to_ical)
-    send_data @cal_string, :type => Mime::ICS, :filename => 'issues.ics'
+    cal_string = with_bug_correction(cal.to_ical) # can be removed as of icalendar 1.1.6
+    send_data cal_string, :type => Mime::ICS, :filename => 'issues.ics'
   end
 
 private
@@ -271,6 +271,7 @@ private
       event.add_contact   issue.assigned_to.name, {"ALTREP" => issue.assigned_to.mail} unless issue.assigned_to.nil?
       event.organizer     "mailto:#{issue.author.mail}", {"CN" => issue.author.name}
       event.url           url_for(:controller => 'issues', :action => 'show', :id => issue.id, :project_id => issue.project_id)
+      event.sequence      issue.lock_version
     }
   end
   
@@ -400,8 +401,8 @@ private
     return [version.start_date, version.due_date]
   end
   
-  # isses_priority goes from 1: low, 2: normal to @priority_count: immediate
-  # icalendar priority goes from 1: urgent to 9: low (btw. 0: undefined)
+  # isses_priority goes from 'low' (1), 'normal' (2) to 'immediate' (@priority_count)
+  # icalendar priority goes from 'urgent' (1) to 'low' (9) (btw. 0 = undefined)
   def map_priority(isses_priority)
     case isses_priority
     when 1; 9
