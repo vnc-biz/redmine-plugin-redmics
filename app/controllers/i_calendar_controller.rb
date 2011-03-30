@@ -369,6 +369,8 @@ private
       event.description   version.description unless version.description.nil?
       event.add_category  l(:label_version).upcase
       event.url           url_for(:controller => 'versions', :action => 'show', :id => version.id)
+      days = (version.updated_on.to_i - version.created_on.to_i) / 86400
+      event.sequence      days
     }
   end
 
