@@ -2,6 +2,8 @@
 
 == 1.2.0
  * more redering options (issue 3, issue 5 and issue 9)
+ * personal rendering options (issue 14)
+ * declared encoding as UTF-8 (issue 10)
 
 == 1.1.0
 

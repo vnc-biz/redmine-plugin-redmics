@@ -8,9 +8,8 @@ GPL v2
 
 == Requirements
 
-This plug-in requires icalendar >= 1.1.5 (http://icalendar.rubyforge.org/).
+This plug-in requires icalendar >= 1.1.6 (http://icalendar.rubyforge.org/).
 
 == Implementation details
 
-Issues are exported as VEVENT-items with their due-date as the event date. 
-The same applies to versions. Unassigned issues have the status TENTATIVE.
+http://code.google.com/p/redmics/w/list
