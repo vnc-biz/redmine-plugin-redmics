@@ -1,5 +1,5 @@
 # redmics - redmine ics export plugin
-# Copyright (c) 2010  Frank Schwarz, frank.schwarz@buschmais.com
+# Copyright (c) 2011  Frank Schwarz, frank.schwarz@buschmais.com
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -15,22 +15,24 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
-require 'redmine'
-
-require 'sidebar_hooks'
-require 'userprefs_hooks'
-
-Redmine::Plugin.register :redmine_ics_export do
-  name 'redmine ics export plugin (aka redmics)'
-  author 'Frank Schwarz'
-  description 'ICalendar view of issue- and version-deadlines'
-  version '1.2.0'
-  url 'http://code.google.com/p/redmics/'
-  author_url 'http://www.buschmais.de/author/frank/'
-  settings(:default => 
-    {
-      :redmics_icsrender_issues => :vevent_end_date,
-      :redmics_icsrender_versions => :vevent_end_date,
-    },
-    :partial => 'redmics_settings')
+class MyController < ApplicationController
+  unloadable
+  
+  def redmics_settings
+    @user = User.current
+    global_prefs = Setting.plugin_redmine_ics_export
+    if request.post?
+      [:redmics_icsrender_issues, :redmics_icsrender_versions].each { |item| 
+        @user.pref[item] = params[:settings][item]
+      }
+      if @user.save
+        @user.pref.save
+        flash.now[:notice] = l(:notice_redmics_userprefs_updated)
+      end
+    end
+    @settings = { }
+    [:redmics_icsrender_issues, :redmics_icsrender_versions].each { |item|  
+      @settings[item] = @user.pref[item] || global_prefs[item]
+    }
+  end
 end

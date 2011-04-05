@@ -1,0 +1,17 @@
+<%# redmics - redmine ics export plugin, Copyright (c) 2010-2011 Frank Schwarz, frank.schwarz@buschmais.com %>
+<h2><%= link_to(l(:label_my_account), :action => 'account') %> &#187; <%=l(:label_redmics_settings_userprefs)%></h2>
+
+<%= error_messages_for 'user' %>
+
+<% form_tag({}, :class => "tabular") do %>
+
+<div class="box">
+<%= render :partial => 'settings/redmics_settings' %>
+</div>
+
+<%= submit_tag l(:button_save) %>
+<% end %>
+
+<% content_for :sidebar do %>
+<%= render :partial => 'sidebar' %>
+<% end %>
