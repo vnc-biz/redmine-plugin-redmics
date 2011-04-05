@@ -36,7 +36,7 @@ class ICalendarController < ApplicationController
                     )
     cal = export.icalendar
     cal.publish
-    send_data cal.to_ical, :type => Mime::ICS, :filename => 'issues.ics'
+    send_data cal.to_ical, :type => 'text/calendar; charset=utf-8', :filename => 'issues.ics'
   end
 
 private
