@@ -17,3 +17,4 @@ es:
   text_settings_rendering_more_information: Véase también
   label_redmics_settings_userprefs: export de ICS
   notice_redmics_userprefs_updated: 'Export de ICS: la configuración ha sido actualizada correctamente'
+  notice_redmics_userprefs_reset: 'Export de ICS: la configuración ha sido reseteado'

@@ -9,7 +9,8 @@
 <%= render :partial => 'settings/redmics_settings' %>
 </div>
 
-<%= submit_tag l(:button_save) %>
+<%= submit_tag l(:button_save), :style => 'vertical-align:baseline;' %>
+<%= link_to(l(:button_reset), :action => 'redmics_settings_reset') %>
 <% end %>
 
 <% content_for :sidebar do %>

@@ -17,3 +17,4 @@ ko:
   text_settings_rendering_more_information: For more information see
   label_redmics_settings_userprefs: ICS export
   notice_redmics_userprefs_updated: ICS export settings have been updated sucessfully
+  notice_redmics_userprefs_reset: ICS export settings have been reset

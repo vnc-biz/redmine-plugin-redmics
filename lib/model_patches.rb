@@ -1,5 +1,5 @@
 # redmics - redmine ics export plugin
-# Copyright (c) 2010  Frank Schwarz, frank.schwarz@buschmais.com
+# Copyright (c) 2011  Frank Schwarz, frank.schwarz@buschmais.com
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -15,23 +15,29 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
-require 'redmine'
+require_dependency 'user_preference'
 
-require 'sidebar_hooks'
-require 'userprefs_hooks'
-require 'model_patches'
+module ModelPatches
+  module UserPreferencePatch
+    def self.included(base)
+      base.extend(ClassMethods)
+      base.send(:include, InstanceMethods)
+      base.class_eval do
+        unloadable
+      end
+    end
 
-Redmine::Plugin.register :redmine_ics_export do
-  name 'redmine ics export plugin (aka redmics)'
-  author 'Frank Schwarz'
-  description 'ICalendar view of issue- and version-deadlines'
-  version '1.2.0'
-  url 'http://code.google.com/p/redmics/'
-  author_url 'http://www.buschmais.de/author/frank/'
-  settings(:default => 
-    {
-      :redmics_icsrender_issues => :vevent_end_date,
-      :redmics_icsrender_versions => :vevent_end_date,
-    },
-    :partial => 'redmics_settings')
+    module ClassMethods
+    end
+
+    module InstanceMethods
+      def unset(*args)
+        h = read_attribute(:others).dup || {}
+        args.each() { |key| h.delete(key) }
+        write_attribute(:others, h)
+      end
+    end    
+  end
 end
+
+UserPreference.send(:include, ModelPatches::UserPreferencePatch)

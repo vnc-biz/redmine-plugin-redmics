@@ -18,8 +18,9 @@
 class MyController < ApplicationController
   unloadable
   
+  before_filter :find_user
+  
   def redmics_settings
-    @user = User.current
     global_prefs = Setting.plugin_redmine_ics_export
     if request.post?
       [:redmics_icsrender_issues, :redmics_icsrender_versions].each { |item| 
@@ -35,4 +36,25 @@ class MyController < ApplicationController
       @settings[item] = @user.pref[item] || global_prefs[item]
     }
   end
+
+  def redmics_settings_reset
+    if @user.save
+      @user.pref.unset(
+        :redmics_icsrender_issues, 
+        :redmics_icsrender_versions
+      )
+      @user.pref.save
+      flash[:notice] = l(:notice_redmics_userprefs_reset)
+    end
+    redirect_to :action => 'redmics_settings'
+  end
+
+private
+
+  def find_user
+    @user = User.current
+  rescue ActiveRecord::RecordNotFound
+    render_403
+  end
+
 end
