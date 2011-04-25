@@ -1,20 +1,22 @@
-# Russian strings go here, contribution of Alexander Sapozhnikov <shoorick77@gmail.com>
+# Russian strings go here, 
+# contribution of Alexander Sapozhnikov <shoorick77@gmail.com>
+# and Dmitriy Trt <dmitriy.trt@gmail.com>
 ru:
   label_icalendar_header: ICalendar
   label_issues_mine: Мои задачи
   label_issues_assigned: Назначенные задачи
   label_issues_all: Все задачи
   label_issues_open_only: только открытые
-  toolip_icalendar_link: Copy the link location for use in your favorite ical-application.
-  label_settings_rendering_header: Render options
-  label_settings_rendering_issues: Issue rendering as
-  label_settings_rendering_versions: Version rendering as
-  option_settings_rendering_none: skip rendering
-  option_settings_rendering_vevent_full_span: full time event
-  option_settings_rendering_vevent_end_date: all-day event for just the end date
-  option_settings_rendering_vevent_start_and_end_date: all-day event for start and end date
-  option_settings_rendering_vtodo: todo item
-  text_settings_rendering_more_information: For more information see
-  label_redmics_settings_userprefs: ICS export
-  notice_redmics_userprefs_updated: ICS export settings have been updated sucessfully
-  notice_redmics_userprefs_reset: ICS export settings have been reset
+  toolip_icalendar_link: Скопируйте адрес ссылки и используйте в вашем любимом ical-приложении.
+  label_settings_rendering_header: Настройки отображения
+  label_settings_rendering_issues: Отображать задачи как
+  label_settings_rendering_versions: Отображать версии как
+  option_settings_rendering_none: не отображать
+  option_settings_rendering_vevent_full_span: событие на полное время
+  option_settings_rendering_vevent_end_date: событие на весь день на дату выполнения
+  option_settings_rendering_vevent_start_and_end_date: событие на весь день на даты начала и выполнения
+  option_settings_rendering_vtodo: задачу
+  text_settings_rendering_more_information: Для подробностей смотрите
+  label_redmics_settings_userprefs: Экспорт в ICS
+  notice_redmics_userprefs_updated: Настройки экспорта в ICS были сохранены успешно
+  notice_redmics_userprefs_reset: Настройки экспорта в ICS были сброшены
