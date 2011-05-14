@@ -1,5 +1,5 @@
 # redmics - redmine ics export plugin
-# Copyright (c) 2010  Frank Schwarz, frank.schwarz@buschmais.com
+# Copyright (c) 2010-2011  Frank Schwarz, frank.schwarz@buschmais.com
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -25,7 +25,7 @@ Redmine::Plugin.register :redmine_ics_export do
   name 'redmine ics export plugin (aka redmics)'
   author 'Frank Schwarz'
   description 'ICalendar view of issue- and version-deadlines'
-  version '1.2.0'
+  version '1.3.dev'
   url 'http://code.google.com/p/redmics/'
   author_url 'http://www.buschmais.de/author/frank/'
   settings(:default => 

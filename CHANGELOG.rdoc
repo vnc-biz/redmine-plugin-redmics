@@ -1,5 +1,7 @@
 = redmine_ics_export (redmics) change-log
 
+== 1.3.dev
+
 == 1.2.0
  * more redering options (issue 3, issue 5 and issue 9)
  * personal rendering options (issue 14)
