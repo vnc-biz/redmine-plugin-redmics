@@ -1,20 +1,22 @@
 # Basque strings go here
+# Author: Ales Zabala Alava (Shagi), <shagi@gisa-elkartea.org>
+# Distributed under the same terms as the Redmics itself.
 eu:
   label_icalendar_header: ICalendar
-  label_issues_mine: My issues
-  label_issues_assigned: Assigned issues
-  label_issues_all: All issues
-  label_issues_open_only: open only
-  toolip_icalendar_link: Copy the link location for use in your favorite ical-application.
-  label_settings_rendering_header: Render options
-  label_settings_rendering_issues: Issue rendering as
-  label_settings_rendering_versions: Version rendering as
-  option_settings_rendering_none: skip rendering
-  option_settings_rendering_vevent_full_span: full time event
-  option_settings_rendering_vevent_end_date: all-day event for just the end date
-  option_settings_rendering_vevent_start_and_end_date: all-day event for start and end date
-  option_settings_rendering_vtodo: todo item
-  text_settings_rendering_more_information: For more information see
-  label_redmics_settings_userprefs: ICS export
-  notice_redmics_userprefs_updated: ICS export settings have been updated sucessfully
-  notice_redmics_userprefs_reset: ICS export settings have been reset
+  label_issues_mine: Nire zereginak
+  label_issues_assigned: Esleitutako zereginak
+  label_issues_all: Zeregin guztiak
+  label_issues_open_only: irekiak bakarrik
+  toolip_icalendar_link: Esteka kopiatu eta zure ical aplikazio gogokoenean erabili.
+  label_settings_rendering_header: Bistaratze aukerak
+  label_settings_rendering_issues: Zereginak horrela bistaratu
+  label_settings_rendering_versions: Bertsioak horrela bistaratu
+  option_settings_rendering_none: ez bistaratu
+  option_settings_rendering_vevent_full_span: egun osoko gertakaria
+  option_settings_rendering_vevent_end_date: egun osoko gertakaria, bukaera datarentzat bakarrik
+  option_settings_rendering_vevent_start_and_end_date: egun osoko gertakaria hasiera eta bukaera datentzat
+  option_settings_rendering_vtodo: egitekoa
+  text_settings_rendering_more_information: Informazio gehiagorako
+  label_redmics_settings_userprefs: ICS exportazioa
+  notice_redmics_userprefs_updated: ICS exportazioaren ezarpenak ongi eguneratu dira.
+  notice_redmics_userprefs_reset: ICS exportazioaren ezarpenak berrezarri dira.
