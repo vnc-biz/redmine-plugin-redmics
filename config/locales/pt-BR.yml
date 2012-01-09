@@ -1,20 +1,21 @@
-# Portuguese strings go here
+# Brazilian Portuguese strings go here
+# contribution of Marcelo Soares Souza
 pt-BR:
   label_icalendar_header: ICalendar
-  label_issues_mine: My issues
-  label_issues_assigned: Assigned issues
-  label_issues_all: All issues
-  label_issues_open_only: open only
-  toolip_icalendar_link: Copy the link location for use in your favorite ical-application.
-  label_settings_rendering_header: Render options
-  label_settings_rendering_issues: Issue rendering as
-  label_settings_rendering_versions: Version rendering as
-  option_settings_rendering_none: skip rendering
-  option_settings_rendering_vevent_full_span: full time event
-  option_settings_rendering_vevent_end_date: all-day event for just the end date
-  option_settings_rendering_vevent_start_and_end_date: all-day event for start and end date
-  option_settings_rendering_vtodo: todo item
-  text_settings_rendering_more_information: For more information see
-  label_redmics_settings_userprefs: ICS export
-  notice_redmics_userprefs_updated: ICS export settings have been updated sucessfully
-  notice_redmics_userprefs_reset: ICS export settings have been reset
+  label_issues_mine: Minhas tarefas
+  label_issues_assigned: Tarefas atribuídas
+  label_issues_all: Todas as tarefas
+  label_issues_open_only: abertas apenas
+  toolip_icalendar_link: Copie o Link para utilizar na sua aplicação ical favorita.
+  label_settings_rendering_header: Opções de renderização
+  label_settings_rendering_issues: Tarefa renderizada como
+  label_settings_rendering_versions: Versão renderizada como
+  option_settings_rendering_none: Pular renderização
+  option_settings_rendering_vevent_full_span: Evento em tempo integral
+  option_settings_rendering_vevent_end_date: Todos os dias até a data final
+  option_settings_rendering_vevent_start_and_end_date: Todos os dias da data inicial a final
+  option_settings_rendering_vtodo: Item a fazer
+  text_settings_rendering_more_information: Para mais informações veja
+  label_redmics_settings_userprefs: Exportar ICS
+  notice_redmics_userprefs_updated: As configuração para exportação de ICS foram atualizadas
+  notice_redmics_userprefs_reset: As configurações para exportação de ICS foram resetadas
