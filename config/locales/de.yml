@@ -18,3 +18,11 @@ de:
   label_redmics_settings_userprefs: ICS Export
   notice_redmics_userprefs_updated: ICS Export Einstellungen wurden erfolgreich aktualisiert
   notice_redmics_userprefs_reset: ICS Export Einstellungen wurden zurückgesetzt
+  label_settings_enhance_summary: Erweitere die Zusammenfassung
+  option_settings_enhance_summary_plain: lasse sie unverändert
+  option_settings_enhance_summary_status: um den Status
+  option_settings_enhance_summary_ticket_number_and_status: um Ticketnummer und Status
+  label_settings_enhance_description: Erweitere die Beschreibung
+  option_settings_enhance_description_plain: lasse sie unverändert
+  option_settings_enhance_description_url_and_version: um die URL und die Version
+  option_settings_enhance_description_full: um alle verfügbaren Informationen

@@ -20,6 +20,7 @@ require 'redmine'
 require 'sidebar_hooks'
 require 'userprefs_hooks'
 require 'model_patches'
+require 'settings_patches'
 
 Redmine::Plugin.register :redmine_ics_export do
   name 'redmine ics export plugin (aka redmics)'
@@ -28,10 +29,12 @@ Redmine::Plugin.register :redmine_ics_export do
   version '1.3.dev'
   url 'http://code.google.com/p/redmics/'
   author_url 'http://www.buschmais.de/author/frank/'
-  settings(:default => 
-    {
+  settings(
+    :default => {
       :redmics_icsrender_issues => :vevent_end_date,
       :redmics_icsrender_versions => :vevent_end_date,
+      :redmics_icsrender_summary => :status,
+      :redmics_icsrender_description => :full,
     },
     :partial => 'redmics_settings')
 end

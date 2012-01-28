@@ -19,3 +19,11 @@ pt-BR:
   label_redmics_settings_userprefs: Exportar ICS
   notice_redmics_userprefs_updated: As configuração para exportação de ICS foram atualizadas
   notice_redmics_userprefs_reset: As configurações para exportação de ICS foram resetadas
+  label_settings_enhance_summary: Enhance summary with
+  option_settings_enhance_summary_plain: keep as is
+  option_settings_enhance_summary_status: status
+  option_settings_enhance_summary_ticket_number_and_status: ticket number and status
+  label_settings_enhance_description: Enhance description with
+  option_settings_enhance_description_plain: keep as is
+  option_settings_enhance_description_url_and_version: URL and version
+  option_settings_enhance_description_full: all available information

@@ -32,6 +32,8 @@ module Redmics
       @assigned_to = args[:assigned_to]
       @issue_strategy = args[:issue_strategy]
       @version_strategy = args[:version_strategy]
+      @summary_strategy = args[:summary_strategy]
+      @description_strategy = args[:description_strategy]
     end
     
     def icalendar
@@ -127,6 +129,14 @@ module Redmics
           :include => [:project], 
           :conditions => c.conditions
         ) unless @version_strategy == :none
+        c = ARCondition.new()
+        c << ["#{Version.table_name}.sharing = ?", 'system']
+        versions << Version.find(
+          :all,
+          :include => [:project],
+          :conditions => c.conditions
+        ) unless @version_strategy == :none
+        versions.flatten!
       rescue Exception => e
         # we will just deliver an empty ical file instead of showing an error page
         @controller.logger.warn('No issues have been selected. ' + e.to_s)
@@ -147,6 +157,8 @@ module Redmics
           result = create_issue_vevent_full_span(issue)
           apply_issue_common_properties(issue, result)
           apply_issue_event_properties(issue, result)
+          enhance_issue_summary(issue, result)
+          enhance_issue_description(issue, result)
           result
         }
       when :vevent_end_date
@@ -154,6 +166,8 @@ module Redmics
           result = create_issue_vevent_end_date(issue)
           apply_issue_common_properties(issue, result)
           apply_issue_event_properties(issue, result)
+          enhance_issue_summary(issue, result)
+          enhance_issue_description(issue, result)
           result
         }
       when :vevent_start_and_end_date
@@ -161,6 +175,8 @@ module Redmics
           result = create_issue_vevent_start_and_end_date(issue)
           apply_issue_common_properties(issue, result)
           apply_issue_event_properties(issue, result)
+          enhance_issue_summary(issue, result)
+          enhance_issue_description(issue, result)
           result
         }
       when :vtodo
@@ -168,6 +184,8 @@ module Redmics
           result = create_issue_vtodo(issue)
           apply_issue_common_properties(issue, result)
           apply_issue_todo_properties(issue, result)
+          enhance_issue_summary(issue, result)
+          enhance_issue_description(issue, result)
           result
         }
       end
@@ -184,6 +202,7 @@ module Redmics
           result = create_version_vevent_full_span(version)
           apply_version_common_properties(version, result)
           apply_version_event_properties(version, result)
+          enhance_version_description(version, result)
           result
         }
       when :vevent_end_date
@@ -191,6 +210,7 @@ module Redmics
           result = create_version_vevent_end_date(version)
           apply_version_common_properties(version, result)
           apply_version_event_properties(version, result)
+          enhance_version_description(version, result)
           result
         }
       when :vevent_start_and_end_date
@@ -198,6 +218,7 @@ module Redmics
           result = create_version_vevent_start_and_end_date(version)
           apply_version_common_properties(version, result)
           apply_version_event_properties(version, result)
+          enhance_version_description(version, result)
           result
         }
       when :vtodo
@@ -205,6 +226,7 @@ module Redmics
           result = create_version_vtodo(version)
           apply_version_common_properties(version, result)
           apply_version_todo_properties(version, result)
+          enhance_version_description(version, result)
           result
         }
       end
@@ -239,7 +261,7 @@ module Redmics
         event = Icalendar::Event.new
         event.dtstart       start_date, {'VALUE' => 'DATE'}
         event.dtend         start_date + 1, {'VALUE' => 'DATE'}
-        event.summary       "<> #{issue.subject} (#{issue.status.name})"
+        event.summary       "<> #{issue.subject}"
         event.uid           "id:redmics:project:#{issue.project_id}:issue:#{issue.id}@#{Setting.host_name}"
         return [event]
       end
@@ -248,7 +270,7 @@ module Redmics
         event = Icalendar::Event.new
         event.dtstart       start_date, {'VALUE' => 'DATE'}
         event.dtend         start_date + 1, {'VALUE' => 'DATE'}
-        event.summary       "> #{issue.subject} (#{issue.status.name})"
+        event.summary       "> #{issue.subject}"
         event.uid           "id:redmics:project:#{issue.project_id}:issue:#{issue.id}:s@#{Setting.host_name}"
         result << event
       end
@@ -256,7 +278,7 @@ module Redmics
         event = Icalendar::Event.new
         event.dtstart       due_date, {'VALUE' => 'DATE'}
         event.dtend         due_date + 1, {'VALUE' => 'DATE'}
-        event.summary       "< #{issue.subject} (#{issue.status.name})"
+        event.summary       "< #{issue.subject}"
         event.uid           "id:redmics:project:#{issue.project_id}:issue:#{issue.id}:e@#{Setting.host_name}"
         result << event
       end
@@ -278,7 +300,7 @@ module Redmics
 
     def apply_issue_common_properties(issue, result)
       result.each { |event|  
-        event.summary       "#{issue.subject} (#{issue.status.name})" unless event.summary
+        event.summary       "#{issue.subject}" unless event.summary
         event.priority      map_priority issue.priority.position
         event.created       issue.created_on.to_date, {'VALUE' => 'DATE'}
         event.last_modified issue.updated_on.to_datetime unless issue.updated_on.nil?
@@ -407,6 +429,73 @@ module Redmics
         else
           todo.status       "IN-PROCESS"
           todo.percent      version.completed_pourcent.to_i
+        end
+      }
+    end
+
+    def enhance_issue_summary(issue, result)
+      result.each { |item|
+        case @summary_strategy
+        when :plain
+          # no action
+        when :status
+          item.summary      "#{item.summary} (#{issue.status.name})" if issue.status
+        when :ticket_number_and_status
+          item.summary      "#{item.summary} (#{issue.status.name})" if issue.status
+          if item.summary =~ /(<|>|<>) (.*)/
+            m = Regexp.last_match
+            item.summary      "#{m[1]} #{issue.tracker} ##{issue.id}: #{m[2]}"
+          else
+            item.summary      "#{issue.tracker} ##{issue.id}: #{item.summary}"
+          end
+        else
+          raise "Unknown summary_strategy: '#{@summary_strategy}.'"
+        end
+      }
+    end
+
+    def enhance_issue_description(issue, result)
+      result.each { |item|
+        case @description_strategy
+        when :plain
+          # no action
+        when :url_and_version
+          header = []
+          header << "#{issue.tracker} ##{issue.id}: #{item.url}"
+          header << "#{@controller.l(:field_fixed_version)}: #{issue.fixed_version}" if issue.fixed_version
+          item.description    header.join("\n") + "\n\n" + item.description
+        when :full
+          header = []
+          header << "#{issue.tracker} ##{issue.id}: #{item.url}"
+          header << "#{@controller.l(:field_author)}: #{issue.author.name}" if issue.author
+          header << "#{@controller.l(:field_status)}: #{issue.status.name}" if issue.status
+          header << "#{@controller.l(:field_priority)}: #{issue.priority}" if issue.priority
+          header << "#{@controller.l(:field_assigned_to)}: #{issue.assigned_to.name}" if issue.assigned_to
+          header << "#{@controller.l(:field_category)}: #{issue.category.name}" if issue.category
+          header << "#{@controller.l(:field_fixed_version)}: #{issue.fixed_version}" if issue.fixed_version
+          item.description    header.join("\n") + "\n\n" + item.description
+        else
+          raise "Unknown description_strategy: '#{@description_strategy}.'"
+        end
+      }
+    end
+
+    def enhance_version_description(version, result)
+      result.each { |item|
+        case @description_strategy
+        when :plain
+          # no action
+        when :url
+          header = []
+          header << "#{@controller.l(:field_url)}: #{item.url}"
+          item.description    header.join("\n") + "\n\n" + item.description
+        when :full
+          header = []
+          header << "#{@controller.l(:field_url)}: #{item.url}"
+          header << "#{@controller.l(:field_status)}: #{version.status}" if version.status
+          item.description    header.join("\n") + "\n\n" + item.description
+        else
+          raise "Unknown description_strategy: '#{@description_strategy}.'"
         end
       }
     end

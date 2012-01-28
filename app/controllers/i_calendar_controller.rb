@@ -22,6 +22,7 @@ class ICalendarController < ApplicationController
   
   accept_key_auth :index
   before_filter :find_user, :find_optional_project, 
+                :decode_optional_rendering_settings,
                 :authorize_access, :check_params, 
                 :load_settings
   
@@ -32,7 +33,9 @@ class ICalendarController < ApplicationController
                     :status => params[:status].to_sym,
                     :assigned_to => params[:assigned_to].to_sym,
                     :issue_strategy => @settings[:redmics_icsrender_issues].to_sym,
-                    :version_strategy => @settings[:redmics_icsrender_versions].to_sym
+                    :version_strategy => @settings[:redmics_icsrender_versions].to_sym,
+                    :summary_strategy => @settings[:redmics_icsrender_summary].to_sym,
+                    :description_strategy => @settings[:redmics_icsrender_description].to_sym
                     )
     cal = export.icalendar
     cal.publish
@@ -52,6 +55,25 @@ private
     @project = Project.find_by_identifier(params[:project_id]);
   rescue ActiveRecord::RecordNotFound
     render_404
+  end
+  
+  def decode_optional_rendering_settings
+    options = [:none, :vevent_full_span, :vevent_end_date, :vevent_start_and_end_date, :vtodo]
+    options_summary = [:plain, :status, :ticket_number_and_status]
+    options_description = [:plain, :url_and_version, :full]
+    @rendering = {}
+    if params[:render_issues] =~ /[0-3]/
+      @rendering[:redmics_icsrender_issues] = options[params[:render_issues].to_i]
+    end
+    if params[:render_versions] =~ /[0-3]/
+      @rendering[:redmics_icsrender_versions] = options[params[:render_versions].to_i]
+    end
+    if params[:render_summary] =~ /[0-2]/
+      @rendering[:redmics_icsrender_summary] = options_summary[params[:render_summary].to_i]
+    end
+    if params[:render_description] =~ /[0-2]/
+      @rendering[:redmics_icsrender_description] = options_description[params[:render_description].to_i]
+    end
   end
   
   def authorize_access
@@ -74,11 +96,14 @@ private
   end
   
   def load_settings
+    defaults = Redmine::Plugin.find(:redmine_ics_export).settings[:default]
     global_prefs = Setting.plugin_redmine_ics_export
     @settings = { }
-    [:redmics_icsrender_issues, :redmics_icsrender_versions].each { |item|  
-      @settings[item] = @user.pref[item] || global_prefs[item]
+    defaults.keys.each { |item|
+      @settings[item] = @rendering[item] ||
+        @user.pref[item] ||
+        global_prefs[item] ||
+        defaults[item]
     }
   end
-  
 end

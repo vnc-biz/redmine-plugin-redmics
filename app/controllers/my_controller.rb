@@ -21,9 +21,10 @@ class MyController < ApplicationController
   before_filter :find_user
   
   def redmics_settings
+    defaults = Redmine::Plugin.find(:redmine_ics_export).settings[:default]
     global_prefs = Setting.plugin_redmine_ics_export
     if request.post?
-      [:redmics_icsrender_issues, :redmics_icsrender_versions].each { |item| 
+      defaults.keys.each { |item|
         @user.pref[item] = params[:settings][item]
       }
       if @user.save
@@ -32,17 +33,15 @@ class MyController < ApplicationController
       end
     end
     @settings = { }
-    [:redmics_icsrender_issues, :redmics_icsrender_versions].each { |item|  
-      @settings[item] = @user.pref[item] || global_prefs[item]
+    defaults.keys.each { |item|
+      @settings[item] = @user.pref[item] || global_prefs[item] || defaults[item]
     }
   end
 
   def redmics_settings_reset
     if @user.save
-      @user.pref.unset(
-        :redmics_icsrender_issues, 
-        :redmics_icsrender_versions
-      )
+      defaults = Redmine::Plugin.find(:redmine_ics_export).settings[:default]
+      @user.pref.unset(defaults.keys)
       @user.pref.save
       flash[:notice] = l(:notice_redmics_userprefs_reset)
     end
@@ -56,5 +55,4 @@ private
   rescue ActiveRecord::RecordNotFound
     render_403
   end
-
 end

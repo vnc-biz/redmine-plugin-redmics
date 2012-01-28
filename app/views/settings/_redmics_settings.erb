@@ -6,6 +6,16 @@
   options[l(:option_settings_rendering_vevent_end_date)] = :vevent_end_date
   options[l(:option_settings_rendering_vevent_start_and_end_date)] = :vevent_start_and_end_date
   options[l(:option_settings_rendering_vtodo)] = :vtodo
+
+  summary_options = ActiveSupport::OrderedHash.new
+  summary_options[l(:option_settings_enhance_summary_plain)] = :plain
+  summary_options[l(:option_settings_enhance_summary_status)] = :status
+  summary_options[l(:option_settings_enhance_summary_ticket_number_and_status)] = :ticket_number_and_status
+
+  description_options = ActiveSupport::OrderedHash.new
+  description_options[l(:option_settings_enhance_description_plain)] = :plain
+  description_options[l(:option_settings_enhance_description_url_and_version)] = :url_and_version
+  description_options[l(:option_settings_enhance_description_full)] = :full
 %>
 <h3><%= l(:label_settings_rendering_header) %></h3>
 <p>
@@ -14,7 +24,15 @@
 </p>
 <p>
   <%= content_tag :label, l(:label_settings_rendering_versions) + ':' %>
-  <%= select_tag 'settings[redmics_icsrender_versions]', options_for_select(options, @settings[:redmics_icsrender_versions].to_sym) %><br>
+  <%= select_tag 'settings[redmics_icsrender_versions]', options_for_select(options, @settings[:redmics_icsrender_versions].to_sym) %><br/>
+</p>
+<p>
+  <%= content_tag :label, l(:label_settings_enhance_summary) + ':' %>
+  <%= select_tag 'settings[redmics_icsrender_summary]', options_for_select(summary_options, @settings[:redmics_icsrender_summary].to_sym) %><br/>
+</p>
+<p>
+  <%= content_tag :label, l(:label_settings_enhance_description) + ':' %>
+  <%= select_tag 'settings[redmics_icsrender_description]', options_for_select(description_options, @settings[:redmics_icsrender_description].to_sym) %><br/>
 </p>
 <p>
   <%= content_tag :span, l(:text_settings_rendering_more_information) + ':' %>
