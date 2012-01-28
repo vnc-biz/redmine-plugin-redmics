@@ -22,7 +22,7 @@ class ICalendarController < ApplicationController
   
   accept_key_auth :index
   before_filter :find_user, :find_optional_project, 
-                :decode_optional_rendering_settings,
+                :decode_url_rendering_settings,
                 :authorize_access, :check_params, 
                 :load_settings
   
@@ -57,7 +57,7 @@ private
     render_404
   end
   
-  def decode_optional_rendering_settings
+  def decode_url_rendering_settings
     options = [:none, :vevent_full_span, :vevent_end_date, :vevent_start_and_end_date, :vtodo]
     options_summary = [:plain, :status, :ticket_number_and_status]
     options_description = [:plain, :url_and_version, :full]
