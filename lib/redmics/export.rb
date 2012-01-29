@@ -444,9 +444,9 @@ module Redmics
           item.summary      "#{item.summary} (#{issue.status.name})" if issue.status
           if item.summary =~ /(<|>|<>) (.*)/
             m = Regexp.last_match
-            item.summary      "#{m[1]} #{issue.tracker} ##{issue.id}: #{m[2]}"
+            item.summary    "#{m[1]} #{issue.tracker} ##{issue.id}: #{m[2]}"
           else
-            item.summary      "#{issue.tracker} ##{issue.id}: #{item.summary}"
+            item.summary    "#{issue.tracker} ##{issue.id}: #{item.summary}"
           end
         else
           raise "Unknown summary_strategy: '#{@summary_strategy}.'"
@@ -462,18 +462,28 @@ module Redmics
         when :url_and_version
           header = []
           header << "#{issue.tracker} ##{issue.id}: #{item.url}"
+          header << "#{@controller.l(:field_project)}: #{issue.project.name}" if issue.project
           header << "#{@controller.l(:field_fixed_version)}: #{issue.fixed_version}" if issue.fixed_version
-          item.description    header.join("\n") + "\n\n" + item.description
+          if item.description
+            item.description header.join("\n") + "\n\n" + item.description
+          else
+            item.description header.join("\n")
+          end
         when :full
           header = []
           header << "#{issue.tracker} ##{issue.id}: #{item.url}"
+          header << "#{@controller.l(:field_project)}: #{issue.project.name}" if issue.project
           header << "#{@controller.l(:field_author)}: #{issue.author.name}" if issue.author
           header << "#{@controller.l(:field_status)}: #{issue.status.name}" if issue.status
           header << "#{@controller.l(:field_priority)}: #{issue.priority}" if issue.priority
           header << "#{@controller.l(:field_assigned_to)}: #{issue.assigned_to.name}" if issue.assigned_to
           header << "#{@controller.l(:field_category)}: #{issue.category.name}" if issue.category
           header << "#{@controller.l(:field_fixed_version)}: #{issue.fixed_version}" if issue.fixed_version
-          item.description    header.join("\n") + "\n\n" + item.description
+          if item.description
+            item.description header.join("\n") + "\n\n" + item.description
+          else
+            item.description header.join("\n")
+          end
         else
           raise "Unknown description_strategy: '#{@description_strategy}.'"
         end
@@ -488,12 +498,21 @@ module Redmics
         when :url
           header = []
           header << "#{@controller.l(:field_url)}: #{item.url}"
-          item.description    header.join("\n") + "\n\n" + item.description
+          if item.description
+            item.description header.join("\n") + "\n\n" + item.description
+          else
+            item.description header.join("\n")
+          end
         when :full
           header = []
           header << "#{@controller.l(:field_url)}: #{item.url}"
+          header << "#{@controller.l(:field_project)}: #{version.project.name}" if version.project
           header << "#{@controller.l(:field_status)}: #{version.status}" if version.status
-          item.description    header.join("\n") + "\n\n" + item.description
+          if item.description
+            item.description header.join("\n") + "\n\n" + item.description
+          else
+            item.description header.join("\n")
+          end
         else
           raise "Unknown description_strategy: '#{@description_strategy}.'"
         end
@@ -520,6 +539,5 @@ module Redmics
       else 9
       end
     end
-
   end
 end
