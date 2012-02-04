@@ -33,7 +33,9 @@ module ModelPatches
     module InstanceMethods
       def unset(*args)
         h = read_attribute(:others).dup || {}
-        args.each() { |key| h.delete(key) }
+        args.flatten.each() { |key|
+          h.delete(key)
+        }
         write_attribute(:others, h)
       end
     end    
