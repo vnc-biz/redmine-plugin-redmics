@@ -17,7 +17,7 @@
 
 module Redmics
   class Export
-    
+    include Redmics
     include Redmine::I18n
     
     def initialize(controller)
@@ -109,7 +109,7 @@ module Redmics
         end
 
         # query: issues
-        c = ARCondition.new()
+        c = QueryConditions.new()
         c << project_condition
         c << issue_status_condition   unless issue_status_condition.empty?
         c << assigned_to_condition    unless assigned_to_condition.empty?
@@ -120,7 +120,7 @@ module Redmics
           :conditions => c.conditions
         ) unless @issue_strategy == :none
         # query: versions
-        c = ARCondition.new()
+        c = QueryConditions.new()
         c << project_condition
         c << version_status_condition unless version_status_condition.empty?
         versions = []
@@ -129,7 +129,7 @@ module Redmics
           :include => [:project], 
           :conditions => c.conditions
         ) unless @version_strategy == :none
-        c = ARCondition.new()
+        c = QueryConditions.new()
         c << ["#{Version.table_name}.sharing = ?", 'system']
         versions << Version.find(
           :all,
