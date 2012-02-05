@@ -35,25 +35,25 @@ class SidebarHooks < Redmine::Hook::ViewListener
     label.keys.sort_by {|sym| sym.to_s}.each {|type|
       link_all  = link_to(label[type], 
         {
+          :controller => 'i_calendar',
           :status => 'all',  
           :assigned_to => type, 
-          :controller => 'i_calendar', 
           :action => 'index', 
           :project_id => project, 
           :key => User.current.rss_key, 
           :format => 'atom'
-        }, 
+        },
         :title => l(:toolip_icalendar_link))
       link_open = link_to(label_open,
         {
+          :controller => 'i_calendar',
           :status => 'open', 
           :assigned_to => type, 
-          :controller => 'i_calendar', 
           :action => 'index', 
           :project_id => project, 
           :key => User.current.rss_key, 
           :format => 'atom'
-        }, 
+        },
         :title => l(:toolip_icalendar_link))
       result += "#{link_all} (#{link_open})<br/>\n";
     }

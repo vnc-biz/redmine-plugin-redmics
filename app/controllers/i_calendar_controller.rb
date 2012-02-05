@@ -78,21 +78,21 @@ private
   
   def authorize_access
     # we have a key but no autenticated user
-    render_404 if params[:key] && @user.anonymous?
+    (render_404; return false) if params[:key] && @user.anonymous?
     # we have a project-id but no project
-    render_404 if params[:project_id] && @project.nil? 
+    (render_404; return false) if params[:project_id] && @project.nil?
     # we have a project but calendar viewing is forbidden for the (possibly anonymous) user
-    render_403 if @project && ! @user.allowed_to?(:view_calendar, @project)
+    (render_403; return false) if @project && ! @user.allowed_to?(:view_calendar, @project)
     # we do not have a project and calendar viewing is globally forbidden for the autenticated user
-    render_403 if @project.nil? && ! @user.allowed_to?(:view_calendar, nil, :global => true)
+    (render_403; return false) if @project.nil? && ! @user.allowed_to?(:view_calendar, nil, :global => true)
   end
   
   def check_params
     # we answer with 'not found' if parameters seem to be bogus
-    render_404 unless params[:status]
-    render_404 unless params[:assigned_to]
-    render_404 if params[:status].length > 10
-    render_404 if params[:assigned_to].length > 10
+    (render_404; return false) unless params[:status]
+    (render_404; return false) unless params[:assigned_to]
+    (render_404; return false) if params[:status].length > 10
+    (render_404; return false) if params[:assigned_to].length > 10
   end
   
   def load_settings
