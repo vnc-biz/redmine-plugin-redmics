@@ -29,7 +29,7 @@ module Redmics
       @user = args[:user]
       @project = args[:project]
       @status = args[:status]
-      @assigned_to = args[:assigned_to]
+      @assignment = args[:assignment]
       @issue_strategy = args[:issue_strategy]
       @version_strategy = args[:version_strategy]
       @summary_strategy = args[:summary_strategy]
@@ -47,7 +47,8 @@ module Redmics
       events += versions.collect(&versions_rederer).flatten
 
       cal = Icalendar::Calendar.new
-      events.each { |event| cal.add_event(event)}
+      cal.publish
+      events.each { |event| cal.add_event(event) }
       return cal
     end
     
@@ -83,7 +84,6 @@ module Redmics
           raise 'User not active.'
         end
 
-        # issue status
         case @status
         when :open
           issue_status_condition = ["#{IssueStatus.table_name}.is_closed = ?", false]
@@ -95,17 +95,16 @@ module Redmics
           raise "Unknown status: '#{@status}'."
         end
 
-        # assignment
-        case @assigned_to
-        when :me
+        case @assignment
+        when :my
           raise 'Anonymous user cannot have issues assigned.' if @user.anonymous?
           assigned_to_condition = ["assigned_to_id = #{@user.id}"]
-        when :'+'
+        when :assigned
           assigned_to_condition = ["assigned_to_id is not null"]
-        when :'*'
+        when :all
           assigned_to_condition = []
         else
-          raise "Unknown assigned_to: '#{@assigned_to}.'"
+          raise "Unknown assignment: '#{@assignment}.'"
         end
 
         # query: issues

@@ -1,5 +1,5 @@
 # redmics - redmine ics export plugin
-# Copyright (c) 2011  Frank Schwarz, frank.schwarz@buschmais.com
+# Copyright (c) 2011 Frank Schwarz, frank.schwarz@buschmais.com
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License

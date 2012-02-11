@@ -1,5 +1,5 @@
 # redmics - redmine ics export plugin
-# Copyright (c) 2010  Frank Schwarz, frank.schwarz@buschmais.com
+# Copyright (c) 2010-2012 Frank Schwarz, frank.schwarz@buschmais.com
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -26,33 +26,32 @@ class SidebarHooks < Redmine::Hook::ViewListener
     result = "<h3>%s</h3>\n" % l(:label_icalendar_header)
     
     label = {
-      :me  => l(:label_issues_mine),
-      :'+' => l(:label_issues_assigned),
-      :'*' => l(:label_issues_all)
+      :my  => l(:label_issues_mine),
+      :assigned => l(:label_issues_assigned),
+      :all => l(:label_issues_all)
     }
-    label.delete(:me) if user.anonymous?
+    label.delete(:my) if user.anonymous?
     label_open = l(:label_issues_open_only)
     label.keys.sort_by {|sym| sym.to_s}.each {|type|
       link_all  = link_to(label[type], 
         {
           :controller => 'i_calendar',
-          :status => 'all',  
-          :assigned_to => type, 
+          :assignment => type,
           :action => 'index', 
           :project_id => project, 
           :key => User.current.rss_key, 
-          :format => 'atom'
+          :format => 'ics'
         },
         :title => l(:toolip_icalendar_link))
       link_open = link_to(label_open,
         {
           :controller => 'i_calendar',
+          :assignment => type,
           :status => 'open', 
-          :assigned_to => type, 
           :action => 'index', 
           :project_id => project, 
           :key => User.current.rss_key, 
-          :format => 'atom'
+          :format => 'ics'
         },
         :title => l(:toolip_icalendar_link))
       result += "#{link_all} (#{link_open})<br/>\n";

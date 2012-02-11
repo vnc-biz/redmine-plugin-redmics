@@ -1,5 +1,5 @@
 # redmics - redmine ics export plugin
-# Copyright (c) 2010  Frank Schwarz, frank.schwarz@buschmais.com
+# Copyright (c) 2010-2012 Frank Schwarz, frank.schwarz@buschmais.com
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -20,26 +20,26 @@ require 'icalendar'
 class ICalendarController < ApplicationController
   unloadable
   
-  accept_key_auth :index
-  before_filter :find_user, :find_optional_project, 
+  accept_rss_auth :index
+  before_filter :find_user,
+                :find_optional_project,
                 :decode_rendering_settings_from_url,
-                :authorize_access, :check_params, 
+                :authorize_access, 
+                :check_and_complete_params,
                 :load_settings
   
   def index
-    export = Redmics::Export.new(self)
-    export.settings(:user => @user, 
-                    :project => @project,
-                    :status => params[:status].to_sym,
-                    :assigned_to => params[:assigned_to].to_sym,
-                    :issue_strategy => @settings[:redmics_icsrender_issues].to_sym,
-                    :version_strategy => @settings[:redmics_icsrender_versions].to_sym,
-                    :summary_strategy => @settings[:redmics_icsrender_summary].to_sym,
-                    :description_strategy => @settings[:redmics_icsrender_description].to_sym
-                    )
-    cal = export.icalendar
-    cal.publish
-    send_data cal.to_ical, :type => 'text/calendar; charset=utf-8', :filename => 'issues.ics'
+    e = Redmics::Export.new(self)
+    e.settings(:user => @user,
+               :project => @project,
+               :status => params[:status].to_sym,
+               :assignment => params[:assignment].to_sym,
+               :issue_strategy => @settings[:redmics_icsrender_issues].to_sym,
+               :version_strategy => @settings[:redmics_icsrender_versions].to_sym,
+               :summary_strategy => @settings[:redmics_icsrender_summary].to_sym,
+               :description_strategy => @settings[:redmics_icsrender_description].to_sym
+               )
+    send_data(e.icalendar.to_ical, :type => 'text/calendar; charset=utf-8')
   end
 
 private
@@ -87,12 +87,11 @@ private
     (render_403; return false) if @project.nil? && ! @user.allowed_to?(:view_calendar, nil, :global => true)
   end
   
-  def check_params
+  def check_and_complete_params
     # we answer with 'not found' if parameters seem to be bogus
-    (render_404; return false) unless params[:status]
-    (render_404; return false) unless params[:assigned_to]
-    (render_404; return false) if params[:status].length > 10
-    (render_404; return false) if params[:assigned_to].length > 10
+    (render_404; return false) unless params[:assignment]
+    # status = all is the default
+    params[:status] ||= :all
   end
   
   def load_settings

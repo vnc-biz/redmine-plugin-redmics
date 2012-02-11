@@ -20,7 +20,7 @@ require 'redmine'
 require 'sidebar_hooks'
 require 'userprefs_hooks'
 require 'model_patches'
-require 'settings_patches'
+require 'controller_patches'
 
 Redmine::Plugin.register :redmine_ics_export do
   name 'redmine ics export plugin (aka redmics)'

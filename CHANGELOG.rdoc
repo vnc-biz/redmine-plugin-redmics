@@ -6,6 +6,7 @@
  * configurable summary and description (issue #11 and #22)
  * make rendering configuration overridable with URL parameters (issue #17)
  * ensuring compatibility to current head of Redmine (issue #24)
+ * more restful ICS URLs (issue #26)
 
 == 1.2.0
  * more redering options (issue 3, issue 5 and issue 9)
