@@ -25,4 +25,5 @@ vi:
   label_settings_enhance_description: Enhance description with
   option_settings_enhance_description_plain: keep as is
   option_settings_enhance_description_url_and_version: URL and version
+  option_settings_enhance_description_full_no_url: all available information without URL
   option_settings_enhance_description_full: all available information

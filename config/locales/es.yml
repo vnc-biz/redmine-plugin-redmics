@@ -25,4 +25,5 @@ es:
   label_settings_enhance_description: Añadir a la descripción
   option_settings_enhance_description_plain: mantenla como está
   option_settings_enhance_description_url_and_version: la URL y la versión
+  option_settings_enhance_description_full_no_url: toda la información disponible sin URL
   option_settings_enhance_description_full: toda la informción disponible

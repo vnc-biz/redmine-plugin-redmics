@@ -468,6 +468,21 @@ module Redmics
           else
             item.description header.join("\n")
           end
+        when :full_no_url
+          header = []
+          header << "#{issue.tracker} ##{issue.id}"
+          header << "#{@controller.l(:field_project)}: #{issue.project.name}" if issue.project
+          header << "#{@controller.l(:field_author)}: #{issue.author.name}" if issue.author
+          header << "#{@controller.l(:field_status)}: #{issue.status.name}" if issue.status
+          header << "#{@controller.l(:field_priority)}: #{issue.priority}" if issue.priority
+          header << "#{@controller.l(:field_assigned_to)}: #{issue.assigned_to.name}" if issue.assigned_to
+          header << "#{@controller.l(:field_category)}: #{issue.category.name}" if issue.category
+          header << "#{@controller.l(:field_fixed_version)}: #{issue.fixed_version}" if issue.fixed_version
+          if item.description
+            item.description header.join("\n") + "\n\n" + item.description
+          else
+            item.description header.join("\n")
+          end
         when :full
           header = []
           header << "#{issue.tracker} ##{issue.id}: #{item.url}"
@@ -497,6 +512,16 @@ module Redmics
         when :url
           header = []
           header << "#{@controller.l(:field_url)}: #{item.url}"
+          if item.description
+            item.description header.join("\n") + "\n\n" + item.description
+          else
+            item.description header.join("\n")
+          end
+        when :full_no_url
+          header = []
+          header << "#{@controller.l(:field_url)}"
+          header << "#{@controller.l(:field_project)}: #{version.project.name}" if version.project
+          header << "#{@controller.l(:field_status)}: #{version.status}" if version.status
           if item.description
             item.description header.join("\n") + "\n\n" + item.description
           else

@@ -25,4 +25,5 @@ fr:
   label_settings_enhance_description: Ajouter au résumé
   option_settings_enhance_description_plain: garder le comme il est
   option_settings_enhance_description_url_and_version: l'URL et la version
+  option_settings_enhance_description_full_no_url: toute l'information disponible sans l'URL
   option_settings_enhance_description_full: toute l'information disponible
