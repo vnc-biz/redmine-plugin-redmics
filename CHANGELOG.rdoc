@@ -1,12 +1,15 @@
 = redmine_ics_export (redmics) change-log
 
-== 1.3.dev
- * Basque translation
- * Brazilian Portuguese translation
+== 1.3.0
+ * Basque translation (issue #18)
+ * Brazilian Portuguese translation (issue #23)
  * configurable summary and description (issue #11 and #22)
  * make rendering configuration overridable with URL parameters (issue #17)
  * ensuring compatibility to current head of Redmine (issue #24)
  * more restful ICS URLs (issue #26)
+
+This version uses a new URL scheme for the ICS links. Therefore, all icalendar URLs must be updated.
+This version requires Redmine >= 1.4.0. Previous versions are not supported.
 
 == 1.2.0
  * more redering options (issue 3, issue 5 and issue 9)
