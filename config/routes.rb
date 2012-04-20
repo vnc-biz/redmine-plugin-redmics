@@ -16,6 +16,8 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 ActionController::Routing::Routes.draw do |map|
+  map.connect 'icalendar/all_projects/:assignment/issues.:format', :controller => 'i_calendar', :action => 'index'
+  map.connect 'icalendar/all_projects/:assignment/:status/issues.:format', :controller => 'i_calendar', :action => 'index'
   map.connect 'icalendar/:project_id/:assignment/issues.:format', :controller => 'i_calendar', :action => 'index'
   map.connect 'icalendar/:project_id/:assignment/:status/issues.:format', :controller => 'i_calendar', :action => 'index'
   map.connect 'my/redmics_settings', :controller => 'my', :action => 'redmics_settings'

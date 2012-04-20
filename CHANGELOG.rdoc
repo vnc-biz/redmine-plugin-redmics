@@ -1,5 +1,8 @@
 = redmine_ics_export (redmics) change-log
 
+== 1.3.1
+ * No route matches ... when viewing all issues (issue #27)
+
 == 1.3.0
  * Basque translation (issue #18)
  * Brazilian Portuguese translation (issue #23)
