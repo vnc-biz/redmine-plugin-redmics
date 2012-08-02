@@ -1,0 +1,5 @@
+redmine-plugin-redmics (1.3.1.2-precise0) precise; urgency=low
+
+  * Packaging for Ubuntu precise
+
+ -- Enrico Weigelt, metux IT service <weigelt@metux.de>  Wed, 01 Aug 2012 02:47:13 +0200
