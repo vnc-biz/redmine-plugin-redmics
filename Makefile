@@ -1,5 +1,5 @@
 
-PLUGIN_NAME=rate
+PLUGIN_NAME=redmine_ics_export
 PLUGIN_DIR=$(DESTDIR)/usr/share/redmine/vendor/plugins/$(PLUGIN_NAME)
 
 INSTALL_FILES=\
